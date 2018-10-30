@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/yuqiongli/Desktop/GPU/exercises
+CMAKE_SOURCE_DIR = /Users/yuqiongli/Desktop/GPU/gpu-exercises
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -109,6 +109,32 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named ioexample
+
+# Build rule for target.
+ioexample: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ioexample
+.PHONY : ioexample
+
+# fast build rule for target.
+ioexample/fast:
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/build
+.PHONY : ioexample/fast
+
+#=============================================================================
+# Target rules for targets named nn
+
+# Build rule for target.
+nn: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 nn
+.PHONY : nn
+
+# fast build rule for target.
+nn/fast:
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/build
+.PHONY : nn/fast
 
 #=============================================================================
 # Target rules for targets named conv
@@ -150,6 +176,60 @@ conv.cpp.s:
 	$(MAKE) -f CMakeFiles/conv.dir/build.make CMakeFiles/conv.dir/conv.cpp.s
 .PHONY : conv.cpp.s
 
+ioexample.o: ioexample.cpp.o
+
+.PHONY : ioexample.o
+
+# target to build an object file
+ioexample.cpp.o:
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/ioexample.cpp.o
+.PHONY : ioexample.cpp.o
+
+ioexample.i: ioexample.cpp.i
+
+.PHONY : ioexample.i
+
+# target to preprocess a source file
+ioexample.cpp.i:
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/ioexample.cpp.i
+.PHONY : ioexample.cpp.i
+
+ioexample.s: ioexample.cpp.s
+
+.PHONY : ioexample.s
+
+# target to generate assembly for a file
+ioexample.cpp.s:
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/ioexample.cpp.s
+.PHONY : ioexample.cpp.s
+
+nn.o: nn.cpp.o
+
+.PHONY : nn.o
+
+# target to build an object file
+nn.cpp.o:
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/nn.cpp.o
+.PHONY : nn.cpp.o
+
+nn.i: nn.cpp.i
+
+.PHONY : nn.i
+
+# target to preprocess a source file
+nn.cpp.i:
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/nn.cpp.i
+.PHONY : nn.cpp.i
+
+nn.s: nn.cpp.s
+
+.PHONY : nn.s
+
+# target to generate assembly for a file
+nn.cpp.s:
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/nn.cpp.s
+.PHONY : nn.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -158,10 +238,18 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... ioexample"
+	@echo "... nn"
 	@echo "... conv"
 	@echo "... conv.o"
 	@echo "... conv.i"
 	@echo "... conv.s"
+	@echo "... ioexample.o"
+	@echo "... ioexample.i"
+	@echo "... ioexample.s"
+	@echo "... nn.o"
+	@echo "... nn.i"
+	@echo "... nn.s"
 .PHONY : help
 
 

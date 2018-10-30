@@ -28,9 +28,23 @@ int main()
  
     // 1. allocate memory on CUDA
     float * d_a, * d_b, * d_c;   // device memory 
-    cudaMalloc((void **) & d_a, size);
-    cudaMalloc((void **) & d_b, size);
-    cudaMalloc((void **) & d_c, size);
+    cudaError_t err1 =  cudaMalloc((void **) & d_a, size);
+    cudaError_t err2 = cudaMalloc((void **) & d_b, size);
+    cudaError_t err3 = cudaMalloc((void **) & d_c, size);
+    if (err1 != cudaSuccess){
+        printf("%s in %s at line %d\n", cudaGetErrorString(err1), __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+    if (err2 != cudaSuccess){
+        printf("%s in %s at line %d\n", cudaGetErrorString(err2), __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+    if (err3 != cudaSuccess){
+        printf("%s in %s at line %d\n", cudaGetErrorString(err3), __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+     
+     
      
     // copy memory 
     cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);

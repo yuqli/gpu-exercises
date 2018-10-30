@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/yuqiongli/Desktop/GPU/gpu-exercises/ioexample.cpp
+vector
+-
+sstream
+-
+iostream
+-
+iterator
+-
+

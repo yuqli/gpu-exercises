@@ -1,3 +1,5 @@
-/Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles/conv.dir
+/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles/ioexample.dir
+/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles/nn.dir
+/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles/conv.dir

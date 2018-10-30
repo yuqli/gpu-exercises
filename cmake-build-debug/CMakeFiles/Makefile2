@@ -54,10 +54,84 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/yuqiongli/Desktop/GPU/exercises
+CMAKE_SOURCE_DIR = /Users/yuqiongli/Desktop/GPU/gpu-exercises
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug
+
+#=============================================================================
+# Target rules for target CMakeFiles/ioexample.dir
+
+# All Build rule for target.
+CMakeFiles/ioexample.dir/all:
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/depend
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target ioexample"
+.PHONY : CMakeFiles/ioexample.dir/all
+
+# Include target in all.
+all: CMakeFiles/ioexample.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/ioexample.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ioexample.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/ioexample.dir/rule
+
+# Convenience name for target.
+ioexample: CMakeFiles/ioexample.dir/rule
+
+.PHONY : ioexample
+
+# clean rule for target.
+CMakeFiles/ioexample.dir/clean:
+	$(MAKE) -f CMakeFiles/ioexample.dir/build.make CMakeFiles/ioexample.dir/clean
+.PHONY : CMakeFiles/ioexample.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/ioexample.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/nn.dir
+
+# All Build rule for target.
+CMakeFiles/nn.dir/all:
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/depend
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles --progress-num=5,6 "Built target nn"
+.PHONY : CMakeFiles/nn.dir/all
+
+# Include target in all.
+all: CMakeFiles/nn.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/nn.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/nn.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/nn.dir/rule
+
+# Convenience name for target.
+nn: CMakeFiles/nn.dir/rule
+
+.PHONY : nn
+
+# clean rule for target.
+CMakeFiles/nn.dir/clean:
+	$(MAKE) -f CMakeFiles/nn.dir/build.make CMakeFiles/nn.dir/clean
+.PHONY : CMakeFiles/nn.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/nn.dir/clean
+
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/conv.dir
@@ -66,7 +140,7 @@ CMAKE_BINARY_DIR = /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug
 CMakeFiles/conv.dir/all:
 	$(MAKE) -f CMakeFiles/conv.dir/build.make CMakeFiles/conv.dir/depend
 	$(MAKE) -f CMakeFiles/conv.dir/build.make CMakeFiles/conv.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target conv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target conv"
 .PHONY : CMakeFiles/conv.dir/all
 
 # Include target in all.
@@ -76,9 +150,9 @@ all: CMakeFiles/conv.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/conv.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/conv.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/exercises/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yuqiongli/Desktop/GPU/gpu-exercises/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/conv.dir/rule
 
 # Convenience name for target.
