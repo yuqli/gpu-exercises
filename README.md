@@ -10,7 +10,7 @@ Exercises using CUDA
 - [ ] Read that chapter;
 
 ## 20181030(To-do)
-- [ ] Finish lab2 on prime number generation.
+- [X] Finish lab2 on prime number generation.
 - [X] Review chapter 3 and write notes;
 - [x] Review chapter 4 and take notes;
 - [ ] Review chapter 5 and take notes;
