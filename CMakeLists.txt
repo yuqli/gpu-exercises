@@ -6,3 +6,4 @@ set(CMAKE_CXX_STANDARD 11)
 add_executable(conv conv.cpp)
 add_executable(nn nn.cpp)
 add_executable(ioexample ioexample.cpp)
+

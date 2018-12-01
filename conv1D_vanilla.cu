@@ -52,9 +52,9 @@ int main() {
     }
     end = clock();
     time_taken = ((double)(end - start))/ CLOCKS_PER_SEC;
-  
+
     printf("Time taken for CPU is %lf\n", time_taken);
-  
+
     printf("Results for CPU :\n");
     for (int i = 0; i < m; i++)
         printf("%.2f\t", b[i]);
@@ -77,13 +77,12 @@ int main() {
     cudaMemcpy(d_mask, mask, sizeM, cudaMemcpyHostToDevice);
 
     dim3 blocksPerGrid(ceil(m/16.0), 1, 1);
-    dim3 threadsPerBlock(16, 1, 1); 
+    dim3 threadsPerBlock(16, 1, 1);
     start = clock();
     convKernel<<<blocksPerGrid, threadsPerBlock>>>(d_a, d_mask, d_temp, m, s);
     cudaMemcpy(temp, d_temp, sizeA, cudaMemcpyDeviceToHost);
     end = clock();
     time_taken = ((double)(end - start))/ CLOCKS_PER_SEC;
- 
  
     cudaDeviceSynchronize();
     cudaError_t error = cudaGetLastError();
@@ -92,7 +91,7 @@ int main() {
         fprintf(stderr,"ERROR: %s\n", cudaGetErrorString(error) );
         exit(-1);
     }
- 
+
     printf("Time taken for GPU is %lf\n", time_taken);
 
     printf("Results for GPU :\n");
