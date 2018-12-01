@@ -13,8 +13,13 @@ Exercises using CUDA
 - [X] Finish lab2 on prime number generation.
 - [X] Review chapter 3 and write notes;
 - [x] Review chapter 4 and take notes;
-- [ ] Review chapter 5 and take notes;
+
+## 20181128(done)
+- [X] Review chapter 5 and take notes -- tilting and memory hierarchy
+- [X] Replicate second code example in chapter 8;
+
+
+## To-dos
 - [ ] Review chapter 6 and take notes;
 - [ ] Review chapter 7 and take notes;
-- [ ] Replicate second code example in chapter 8;
 - [ ] Replicate chapter 9 code examples;
