@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <time.h>
 
-
 /* To index element (c, x, y) of a 3D array stored as 1D */
 // x is row index, y is column index, c is channel index
 #define index3(c, x, y, H, W) ((c)*(H)*(W)) + (x)*(W) + (y)
@@ -30,10 +29,10 @@ const unsigned int W0 = W + 2 * P;
 const unsigned int BDIM = 32;    // block dimension
 const unsigned int TW = BDIM + FW - 1;  // tile width. Assume filter width is odd
 
-__constant__ double D_F[ K * C * FW * FH * sizeof(double)];  // filter in device const memory
+__constant__ double D_F[K * C * FW * FH];  // filter in device const memory
 
 __global__ void convKernel(double * img, double * f, double * o);
-__global__ void convTiledKernel(double * img, double * f, double * o);
+__global__ void convTiledKernel(double * img,  double * o);  // constant memory variable is no longer passed as argument as it's global
 
 double checksum3(double * i, unsigned int cnl, unsigned int row, unsigned int col){
 	// @i: image which is a 3D image represented as an array
@@ -198,12 +197,13 @@ int main()
 	cudaMalloc(& d_o_t, num_o * sizeof(double));
 
     // optimization 1: copy the filter from host to the const memory
-    cudaMemcpyToSymbol(D_F, filter, num_f * sizeof(double));
+	cudaMemcpyToSymbol(D_F, filter, num_f * sizeof(double));
+	// check if filter copy is successful
 
     start = clock();  // begin timer
 
 	// optimization 2: use tilting algorithms for convolution
-	convTiledKernel<<<blocksPerGrid, threadsPerBlock>>>(d_i, D_F, d_o_t);  // calculation goes to CUDA
+	convTiledKernel<<<blocksPerGrid, threadsPerBlock>>>(d_i, d_o_t);  // calculation goes to CUDA
 
 	end = clock();  // end timer
     time_taken = ((double)(end - start))/ CLOCKS_PER_SEC;
@@ -221,8 +221,8 @@ int main()
 	cudaMemcpy(out_t, d_o_t, num_o * sizeof(double), cudaMemcpyDeviceToHost);
 
 	// get checksum
-	double checksum_o_t = checksum3(out, K, H, W);
-//	printf("checksum output for tiled convolution %.2f\n", checksum_o_t);
+	double checksum_o_t = checksum3(out_t, K, H, W);
+	printf("checksum output for tiled convolution %.2f\n", checksum_o_t);
 
 
 	free(filter);
@@ -255,7 +255,7 @@ __global__ void convKernel(double * img, double * f, double * o){
 
 
 // Kernel for tiled convolution
-__global__ void convTiledKernel(double * img, double * f, double * o){
+__global__ void convTiledKernel(double * img,  double * o){
 	// save all coordinates to save global memory access in future calculation
 	unsigned int bidx = blockIdx.x;
 	unsigned int bidy = blockIdx.y;
@@ -272,12 +272,11 @@ __global__ void convTiledKernel(double * img, double * f, double * o){
 	unsigned int c, i, j;    // indices in the data tile
 
 	// 1. move data into the tile. Employ 32 * 4 + 4 workers, everyone move three elements
-	__shared__ double  ds_tile[TW * TW * C];
+	__shared__ double  ds_tile[C * TW * TW];
 
 	// locate the tile in the data coordinate. Used to indexing in data
 	unsigned int tile_begin_x_in_data_crd = bidx * bdimx - P + 1;
 	unsigned int tile_begin_y_in_data_crd = bidy * bdimy - P + 1;
-	unsigned int tile_begin_z_in_data_crd = 0;
 
 	// Three types of data: halo boundaries, halo edges, and internal data
 	// 1.1 move left halo boundaries, use the first column of threads
@@ -287,6 +286,7 @@ __global__ void convTiledKernel(double * img, double * f, double * o){
 			ds_tile[index3(c, tx+1, 0, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + tx, tile_begin_y_in_data_crd + 0, H0, W0)];
 		}
 	}
+//	printf("Left halo complete.\n");
 
 	// 1.2 move right halo boundaries, use the second column of threads
 	if (ty == 1){
@@ -294,6 +294,7 @@ __global__ void convTiledKernel(double * img, double * f, double * o){
 			ds_tile[index3(c, tx+1, TW-1, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + tx, tile_begin_y_in_data_crd + TW-1, H0, W0)];
 		}
 	}
+//	printf("Right halo complete.\n");
 
 	// 1.3 move upper halo boundaries, use the third column of threads
 	if (ty == 2){
@@ -301,6 +302,7 @@ __global__ void convTiledKernel(double * img, double * f, double * o){
 			ds_tile[index3(c, 0, tx+1, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + 0, tile_begin_y_in_data_crd + tx, H0, W0)];
 		}
 	}
+//	printf("Upper halo complete.\n");
 
 	// 1.4 move lower halo boundaries, use the forth column of threas
 	if (ty == 3){
@@ -308,6 +310,7 @@ __global__ void convTiledKernel(double * img, double * f, double * o){
 			ds_tile[index3(c,TW-1, tx+1, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + TW - 1, tile_begin_y_in_data_crd + tx, H0, W0)];
 		}
 	}
+//	printf("Lower halo complete.\n");
 
 	// 1.5 move all the edges
 	if (ty == 4){
@@ -317,44 +320,58 @@ __global__ void convTiledKernel(double * img, double * f, double * o){
 				ds_tile[index3(c, 0, 0, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd, tile_begin_y_in_data_crd, H0, W0)];
 			}
 		}
+//		printf("Upper left complete.\n");
 		// 1.5.2 the second thread in the fifth column deals with lower left edge channels
 		if (tx == 1){
 			for (c = 0; c < C; c++){
 				ds_tile[index3(c, TW-1, 0, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + TW - 1, tile_begin_y_in_data_crd, H0, W0)];
 			}
 		}
+//		printf("Lower left complete.\n");
 		// 1.5.3 the third thread in the fifth column deals with up right edge channels
 		if (tx == 2){
 			for (c = 0; c < C; c++){
 				ds_tile[index3(c, 0, TW-1, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd, tile_begin_y_in_data_crd + TW - 1, H0, W0)];
 			}
 		}
+//		printf("upper right complete.\n");
 		// 1.5.4 the forth thread in the fifth column deals with the lower right edge channels
 		if (tx == 3){
 			for (c = 0; c < C; c++){
 				ds_tile[index3(c, TW-1, TW-1, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + TW - 1, tile_begin_y_in_data_crd + TW - 1, H0, W0)];
 			}
 		}
+//		printf("Lower right complete.\n");
 	}
 
 	// 1.6 move all the internal elements... perfect match!
 	for (c = 0; c < C; c++){
+//		printf("Now copying (%d, %d, %d) in the tile.\n", c, tx, ty);
 		ds_tile[index3(c, tx, ty, TW, TW)] = img[index3(c, tile_begin_x_in_data_crd + tx, tile_begin_y_in_data_crd + ty, H0, W0)];
 	}
 
 	__syncthreads();
 
 	// 2. Perform convolution.
-    unsigned int y = bidy * bdimy + ty;  // column
+//	printf("The dimension of data tile is (%d, %d, %d).\n", C, TW, TW);
+//	printf("The number of elements in data tile is (%d).\n", sizeof(ds_tile)/sizeof(double));
 	unsigned int x = bidx * bdimx + tx;  // row
+    unsigned int y = bidy * bdimy + ty;  // column
 	unsigned int k = bidz * bdimz + tz;  // filter id
 
 	for (c = 0; c < C; c++){
-		for (j = 0; j < FH; j++){
-			for (i = 0; i < FW; i++)
+		for (j = 0; j < FW; j++){
+			for (i = 0; i < FH; i++){
+//				printf("The element at filter position (%d, %d, %d, %d) is %d.\n",
+//				        k, c, FW-1-i, FW-1-j,
+//				        D_F[index4(k, c, FW-1-i, FH-1-j, C, FH, FW)]);
+//				printf("The element at tile position (%d, %d, %d) is %d.\n", c, tx + i, ty + j,
+//			           ds_tile[index3(c, tx + i, ty + j, TW, TW)]);
 	            o[index3(k, x, y, H, W)] +=
-				    f[index4(k, c, FW-1-i, FH-1-j, C, FH, FW)] *
+				    D_F[index4(k, c, FW-1-i, FH-1-j, C, FH, FW)] *
 					ds_tile[index3(c, tx + i, ty + j, TW, TW)];  // convolution step on the tile
+//				printf("The element at output position (%d, %d, %d) is %d.\n", k, x, y, o[index3(k, x, y, H, W)]);
+			}
 		}
 	}
 }
