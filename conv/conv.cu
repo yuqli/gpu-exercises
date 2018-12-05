@@ -131,8 +131,8 @@ int main()
 	int x, y;
 	for (c = 0; c < C; c++){  // reuse previous indexer c
 		// 1. initialize the matrix in the middle
-		for (x = 0; x < H-1; x++){
-			for (y = 0; y < W-1; y++){
+		for (x = 0; x < H; x++){
+			for (y = 0; y < W; y++){
 			    img[index3(c, x, y, H, W)] = c * (x + y);
 	            // printf("image pixel at (%d, %d, %d) is %.2f\n", c, x, y, img0[index3(c, x, y, H0, W0)]);
 			}
@@ -272,7 +272,7 @@ int main()
 	cudnnTensorDescriptor_t output_descriptor;
 	checkCUDNN(cudnnCreateTensorDescriptor(&output_descriptor));
 	checkCUDNN(cudnnSetTensor4dDescriptor(output_descriptor, CUDNN_TENSOR_NCHW, \
-										 CUDNN_DATA_DOUBLE, 1, C, H, W));
+										 CUDNN_DATA_DOUBLE, 1, K, H, W));
 
 	cudnnFilterDescriptor_t kernel_descriptor;
 	checkCUDNN(cudnnCreateFilterDescriptor(&kernel_descriptor));
@@ -303,7 +303,7 @@ int main()
 												       output_descriptor,
 												       convolution_algorithm,
 												       &workspace_bytes));
-    std::cerr << "Workspace size: " << (workspace_bytes / 1048576.0) << "MB\n";
+//    std::cerr << "Workspace size: " << (workspace_bytes / 1048576.0) << "MB\n";
 
 	size_t * d_workspace;
 	cudaMalloc(&d_workspace, workspace_bytes);
@@ -311,22 +311,67 @@ int main()
     // allocate input
 	double * d_input;
 	cudaMalloc(&d_input, num_i_no_padding * sizeof(double));
-	cudaMemcpy(d_input, img, num_i_no_padding, cudaMemcpyHostToDevice);   // copy image to device
+	cudaMemcpy(d_input, img, num_i_no_padding * sizeof(double), cudaMemcpyHostToDevice);   // copy image to device
 
-	// allocate output
+    error = cudaGetLastError();
+    if(error!=cudaSuccess)
+    {
+        fprintf(stderr,"ERROR: %s\n", cudaGetErrorString(error) );
+        exit(-1);
+    }
+
+//    double checksum_img = checksum3(img, C, H, W);
+//    printf("checksum for image is %.4f\n", checksum_img);
+
+	double * check_img;
+	check_img = (double*)calloc(num_i_no_padding, sizeof(double));   // num_o is calculated when assigning kernels
+	cudaMemcpy(check_img, d_input, num_i_no_padding * sizeof(double), cudaMemcpyDeviceToHost);
+
+    error = cudaGetLastError();
+    if(error!=cudaSuccess)
+    {
+        fprintf(stderr,"ERROR: %s\n", cudaGetErrorString(error) );
+        exit(-1);
+    }
+
+	double checksum_img_o = checksum3(check_img, C, H, W);
+//	printf("%4.6lf\n", checksum_img_o);
+
+	double * check_d_f;
+	check_d_f = (double*)calloc(num_f, sizeof(double));   // num_o is calculated when assigning kernels
+	cudaMemcpy(check_d_f, d_f, num_f * sizeof(double), cudaMemcpyDeviceToHost);
+
+    error = cudaGetLastError();
+    if(error!=cudaSuccess)
+    {
+        fprintf(stderr,"ERROR: %s\n", cudaGetErrorString(error) );
+        exit(-1);
+    }
+
+//	double checksum_d_f = checksum4(check_d_f, K, C, FH, FW);
+//	printf("%4.6lf\n", checksum_d_f);
+
+    // allocate output
 	double * d_output;
-	cudaMalloc(&d_output, num_i_no_padding * sizeof(double));
-	cudaMemset(d_output, 0, num_i_no_padding * sizeof(double));
+	cudaMalloc(&d_output, num_o * sizeof(double));
+	cudaMemset(d_output, 0, num_o* sizeof(double));
 
-	// kernel is already in constant memoery D_F
-	const float alpha = 1, beta = 0;
+    error = cudaGetLastError();
+    if(error!=cudaSuccess)
+    {
+        fprintf(stderr,"ERROR: %s\n", cudaGetErrorString(error) );
+        exit(-1);
+    }
+
+	// kernel is already in memoery d_f
+	const double alpha = 1, beta = 0;
     start = clock();  // begin timer
 	checkCUDNN(cudnnConvolutionForward(cudnn,
 	                                   &alpha,
 								       input_descriptor,
 								       d_input,
 								       kernel_descriptor,
-								       D_F,
+								       d_f,
 								       convolution_descriptor,
 								       convolution_algorithm,
 								       d_workspace,
@@ -338,9 +383,17 @@ int main()
 	end = clock();  // end timer
     time_taken = ((double)(end - start))/ CLOCKS_PER_SEC;
 
-	double * out_cudnn;  // tiled output
+	double * out_cudnn;
 	out_cudnn = (double*)calloc(num_o, sizeof(double));   // num_o is calculated when assigning kernels
 	cudaMemcpy(out_cudnn, d_output, num_o * sizeof(double), cudaMemcpyDeviceToHost);
+
+    error = cudaGetLastError();
+    if(error!=cudaSuccess)
+    {
+        fprintf(stderr,"ERROR: %s\n", cudaGetErrorString(error) );
+        exit(-1);
+    }
+
 	double checksum_o_cudnn = checksum3(out_cudnn, K, H, W);
 	printf("%4.6lf, %4.6lf\n", checksum_o_cudnn, time_taken);
 
