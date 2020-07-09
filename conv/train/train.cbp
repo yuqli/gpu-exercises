@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="train"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\opt\;CMake Files\..\..\..\..\..\..\..\opt\ros\;CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\;CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\share\;CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/media/yuqiong/DATA/alexnet/src/cpp/train"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/media/yuqiong/DATA/alexnet/src/cpp/train"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/media/yuqiong/DATA/alexnet/src/cpp/train"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="train">
+				<Option output="/media/yuqiong/DATA/alexnet/src/cpp/train/train" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/media/yuqiong/DATA/alexnet/src/cpp/train"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/cuda-9.2/include"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 train"/>
+					<CompileFile command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="train/fast">
+				<Option output="/media/yuqiong/DATA/alexnet/src/cpp/train/train" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/media/yuqiong/DATA/alexnet/src/cpp/train"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/cuda-9.2/include"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 train/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/media/yuqiong/DATA/alexnet/src/cpp/train/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/CMakeFiles/train.dir/train_generated_train.cu.o">
+			<Option target="train"/>
+		</Unit>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/train.cu">
+			<Option target="train"/>
+		</Unit>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/../../../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/../../../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/../../../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+		<Unit filename="/media/yuqiong/DATA/alexnet/src/cpp/train/../../../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
