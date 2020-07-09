@@ -1,5 +1,0 @@
-/media/yuqiong/DATA/gpu-exercises/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/media/yuqiong/DATA/gpu-exercises/cmake-build-debug/CMakeFiles/conv.dir
-/media/yuqiong/DATA/gpu-exercises/cmake-build-debug/CMakeFiles/ioexample.dir
-/media/yuqiong/DATA/gpu-exercises/cmake-build-debug/CMakeFiles/nn.dir
-/media/yuqiong/DATA/gpu-exercises/cmake-build-debug/CMakeFiles/edit_cache.dir

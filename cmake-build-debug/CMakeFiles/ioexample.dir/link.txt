@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/ioexample.dir/ioexample.cpp.o  -o ioexample 

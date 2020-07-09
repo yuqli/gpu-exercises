@@ -1,3 +1,0 @@
-/media/yuqiong/DATA/alexnet/src/cpp/train/CMakeFiles/edit_cache.dir
-/media/yuqiong/DATA/alexnet/src/cpp/train/CMakeFiles/rebuild_cache.dir
-/media/yuqiong/DATA/alexnet/src/cpp/train/CMakeFiles/train.dir
